@@ -4,7 +4,6 @@ import { IoSunny, IoMoon } from 'react-icons/io5/index'
 const themes = ['light', 'dark']
 
 export default function ThemeToggle() {
-  //TODO: create Theme-Toggle Button
   const [isMounted, setIsMounted] = useState(false)
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined' && localStorage.getItem('theme')) {
@@ -27,21 +26,17 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     const root = window.document.documentElement
-    console.log(root)
     if (theme === 'light') {
       root.classList.remove('dark')
     } else {
       root.classList.add('dark')
     }
-
-    console.log(root)
   }, [theme])
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
 
-  console.log(theme)
   return isMounted ? (
     <div className='inline-flex items-center p-[1px] rounded-3xl bg-purple-300 dark:bg-zinc-600'>
       {themes.map(t => {
