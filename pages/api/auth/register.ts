@@ -1,9 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Users } from '../../../typings'
 import { db } from '../db'
 import bcrypt from 'bcryptjs'
-import { MysqlError } from 'mysql'
 
 type Data = {
   message: string
@@ -16,7 +14,7 @@ export default function handler(
   const { method } = req
 
   if (method === 'POST') {
-    const q = 'SELECT * FROM users WHERE email = ? OR username = ?'
+    const q = 'SELECT * FROM user WHERE email = ? OR username = ?'
     db.query(q, [req.body.email, req.body.username], (err, data) => {
       if (err) return res.status(500)
       if (data.length)
@@ -27,7 +25,7 @@ export default function handler(
       const hash = bcrypt.hashSync(req.body.password, salt)
 
       // Query to insert user into db.
-      const q = 'INSERT INTO users(`username`, `email`, `password`) VALUES (?)'
+      const q = 'INSERT INTO user(`username`, `email`, `password`) VALUES (?)'
       const values = [req.body.username, req.body.email, hash]
 
       db.query(q, [values], err => {

@@ -13,7 +13,7 @@ export default function handler(req: NextApiRequest, res: NextResponse) {
   const { method } = req
   if (method === 'POST') {
     // Check if your exist
-    const query = 'SELECT * FROM users WHERE username = ?'
+    const query = 'SELECT * FROM user WHERE username = ?'
     db.query(query, [req.body.username], (err, data) => {
       if (err)
         return res
